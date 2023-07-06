@@ -1,0 +1,6 @@
+.DS_Store
+*.zip
+*.class
+*.cache
+*.mp4
+node_modules/
