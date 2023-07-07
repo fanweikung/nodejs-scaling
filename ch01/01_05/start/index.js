@@ -7,12 +7,20 @@ if (cluster.isMaster) {
   for (let i = 0; i < numCPUs; i++) {
     cluster.fork();
   }
+  cluster.on("exit", (worker) => {
+    console.log(`process ${process.pid} had died`);
+    console.log(`only ${Object.keys(cluster.workers).length} remaining`);
+  });
 } else {
+  console.log(`started a worker at ${process.pid}`);
   http
     .createServer((req, res) => {
-      const message = `worker ${process.pid}...`;
-      console.log(message);
-      res.end(message);
+      res.end(`process: ${process.pid}`);
+      if (req.url === "/kill") {
+        process.exit();
+      } else if (req.url === "/") {
+        console.log(`serving from ${process.pid}`);
+      }
     })
     .listen(3000);
 }
