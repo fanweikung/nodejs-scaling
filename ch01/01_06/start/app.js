@@ -1,11 +1,5 @@
 const http = require("http");
-const options = [
-  "Go for it!",
-  "Maybe sleep on it",
-  "Do some more research",
-  "I don't know",
-  "I wouldn't",
-];
+const options = ["Do it!", "Don't do it"];
 
 const server = http.createServer((req, res) => {
   const randomIndex = Math.floor(Math.random() * options.length);
